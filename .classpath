@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-18">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacpp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacv.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacv-android-arm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacv-linux-arm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacv-linux-x86.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacv-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacv-macosx-x86_64.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacv-windows-x86.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javacv-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rfrodrigues/Dev/Projeto/estudo-workspace/premierleagueclassifier/libs/javatuples-1.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
