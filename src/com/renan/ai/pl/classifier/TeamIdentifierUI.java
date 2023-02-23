@@ -79,7 +79,7 @@ public class TeamIdentifierUI extends JFrame {
 		btnLoadTeamImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jfc = new JFileChooser();
-				jfc.setCurrentDirectory(new File(".\\src\\images"));
+				jfc.setCurrentDirectory(new File(".\\src\\to_be_classified_test"));
 				int dialogUserActionResult = jfc.showDialog(contentPane, "Carregar imagem do time");
 				if (dialogUserActionResult == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = jfc.getSelectedFile();
@@ -241,7 +241,7 @@ public class TeamIdentifierUI extends JFrame {
 		instanceToClassify.setValue(5, Float.parseFloat(txtChelseaGoalkeeperJerseyColour.getText()));
 
 		double[] result = naiveBayes.distributionForInstance(instanceToClassify);
-		DecimalFormat decimalFormat = new DecimalFormat("#,###.0000");
+		DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 		txtNaiveBayesArsenal.setText(decimalFormat.format(result[0]));
 		txtNaiveBayesCity.setText(decimalFormat.format(result[2]));
