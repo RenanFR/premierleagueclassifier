@@ -2,7 +2,7 @@ package com.renan.ai.pl.classifier;
 
 public enum Team {
 
-	ARSENAL("arsenal", 1), CITY("mancity", 2), MANCHESTER_UNITED("manutd", 3), CHELSEA("chelseafc", 10);
+	ARSENAL("arsenal", 1), CITY("mancity", 2), CHELSEA("chelseafc", 10);
 
 	private String prefix;
 	private int teamCategory;
@@ -24,7 +24,6 @@ public enum Team {
 		return switch (prefix) {
 		case "arsenal" -> ARSENAL;
 		case "mancity" -> CITY;
-		case "manutd" -> MANCHESTER_UNITED;
 		case "chelseafc" -> CHELSEA;
 		default -> null;
 		};
