@@ -44,7 +44,8 @@ public class EnglishTeamsFeatureExtraction {
 			teamCategory = team.getTeamCategory();
 			teamCategoryStr = team.getPrefix();
 
-			float[] featureArrayForImage = loadImageAndGetFeatureVector(imageFolder.getAbsolutePath() + "\\" + imageFiles[i].getName());
+			float[] featureArrayForImage = loadImageAndGetFeatureVector(
+					imageFolder.getAbsolutePath() + "\\" + imageFiles[i].getName());
 
 			features[i][0] = featureArrayForImage[0];
 			features[i][1] = featureArrayForImage[1];
@@ -73,15 +74,15 @@ public class EnglishTeamsFeatureExtraction {
 	}
 
 	public static float[] loadImageAndGetFeatureVector(String imagePath) {
-		
+
 		SelectedTeamFeatures selectedTeamFeatures = new SelectedTeamFeatures();
-		
+
 		IplImage rawImage = loadPlayerImage(imagePath);
-		
+
 		iterateEveryPixelAndSetFeatureValues(selectedTeamFeatures, getFeatureSpecificationForEachTeam(), rawImage);
 
 		setFeaturesPercentage(selectedTeamFeatures, rawImage);
-		
+
 		float[] featureArrayForImage = getFeatureArrayForImage(selectedTeamFeatures);
 		return featureArrayForImage;
 	}
@@ -178,46 +179,41 @@ public class EnglishTeamsFeatureExtraction {
 
 	private static List<Pixel> getFeatureSpecificationForEachTeam() {
 		Pixel arsenalMainColourPixel = new Pixel(PixelType.MAIN_COLOUR, Team.ARSENAL,
-				List.of(new ColourRange(204, 19, 31), new ColourRange(119, 5, 5), new ColourRange(213, 19, 24),
-						new ColourRange(174, 1, 7), new ColourRange(231, 92, 91), new ColourRange(219, 56, 51),
-						new ColourRange(236, 35, 43), new ColourRange(104, 3, 12), new ColourRange(210, 27, 44),
-						new ColourRange(196, 10, 33)));
+				List.of(new ColourRange(104, 218, 1, 61, 1, 64), new ColourRange(118, 217, 0, 28, 0, 39),
+						new ColourRange(207, 227, 47, 83, 44, 80), new ColourRange(109, 254, 0, 53, 8, 60),
+						new ColourRange(103, 225, 0, 58, 8, 50)));
+
 		Pixel arsenalGoalkeeperJerseyColourPixel = new Pixel(PixelType.GOALKEEPER_JERSEY_COLOUR, Team.ARSENAL,
-				List.of(new ColourRange(255, 238, 136), new ColourRange(255, 229, 76)));
+				List.of(new ColourRange(222, 255, 193, 238, 0, 137)));
 
 		Pixel cityMainColourPixel = new Pixel(PixelType.MAIN_COLOUR, Team.CITY,
-				List.of(new ColourRange(179, 231, 255), new ColourRange(163, 215, 255), new ColourRange(125, 178, 240),
-						new ColourRange(107, 159, 225), new ColourRange(124, 180, 252), new ColourRange(143, 195, 254),
-						new ColourRange(194, 242, 255), new ColourRange(65, 182, 238), new ColourRange(120, 176, 217),
-						new ColourRange(105, 162, 205)));
-
+				List.of(new ColourRange(54, 204, 153, 247, 206, 255), new ColourRange(161, 187, 219, 237, 250, 255),
+						new ColourRange(106, 129, 158, 178, 220, 237), new ColourRange(124, 228, 181, 239, 245, 255),
+						new ColourRange(123, 161, 187, 214, 241, 255), new ColourRange(96, 133, 149, 186, 188, 225)));
 		Pixel cityGoalkeeperJerseyColourPixel = new Pixel(PixelType.GOALKEEPER_JERSEY_COLOUR, Team.CITY,
-				List.of(new ColourRange(255, 165, 96), new ColourRange(255, 181, 108)));
+				List.of(new ColourRange(231, 255, 88, 193, 47, 120)));
 
 		Pixel chelseaMainColourPixel = new Pixel(PixelType.MAIN_COLOUR, Team.CHELSEA,
-				List.of(new ColourRange(84, 103, 206), new ColourRange(54, 63, 187), new ColourRange(40, 84, 185),
-						new ColourRange(41, 76, 168), new ColourRange(74, 81, 160), new ColourRange(66, 79, 162)));
-
+				List.of(new ColourRange(7, 87, 16, 110, 72, 211), new ColourRange(19, 64, 60, 108, 147, 202),
+						new ColourRange(49, 85, 55, 94, 128, 172), new ColourRange(2, 27, 42, 61, 111, 139),
+						new ColourRange(6, 26, 53, 86, 151, 201)));
 		Pixel chelseaGoalkeeperJerseyColourPixel = new Pixel(PixelType.GOALKEEPER_JERSEY_COLOUR, Team.CHELSEA,
-				List.of(new ColourRange(255, 223, 159), new ColourRange(253, 170, 94)));
+				List.of(new ColourRange(246, 254, 152, 223, 75, 153)));
+
 		return List.of(arsenalMainColourPixel, arsenalGoalkeeperJerseyColourPixel, cityMainColourPixel,
 				arsenalGoalkeeperJerseyColourPixel, cityGoalkeeperJerseyColourPixel, chelseaMainColourPixel,
 				chelseaMainColourPixel, chelseaGoalkeeperJerseyColourPixel);
 
 	}
-	
+
 	private static float[] getFeatureArrayForImage(SelectedTeamFeatures selectedTeamFeatures) {
-		return new float[] {
-				selectedTeamFeatures.getArsenalMainColour(), 
-				selectedTeamFeatures.getArsenalGoalkeeperJerseyColour(), 
-				
-				selectedTeamFeatures.getCityMainColour(), 
-				selectedTeamFeatures.getCityGoalkeeperJerseyColour(), 
-				
-				selectedTeamFeatures.getChelseaMainColour(), 
-				selectedTeamFeatures.getChelseaGoalkeeperJerseyColour()
-		};
-		
+		return new float[] { selectedTeamFeatures.getArsenalMainColour(),
+				selectedTeamFeatures.getArsenalGoalkeeperJerseyColour(),
+
+				selectedTeamFeatures.getCityMainColour(), selectedTeamFeatures.getCityGoalkeeperJerseyColour(),
+
+				selectedTeamFeatures.getChelseaMainColour(), selectedTeamFeatures.getChelseaGoalkeeperJerseyColour() };
+
 	}
 
 }

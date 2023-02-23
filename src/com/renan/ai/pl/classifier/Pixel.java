@@ -30,8 +30,9 @@ public class Pixel {
 	}
 
 	public boolean match(double red, double green, double blue) {
-		Predicate<ColourRange> matchColour = rgb -> rgb.getRed() == red && rgb.getGreen() == green
-				&& rgb.getBlue() == blue;
+		Predicate<ColourRange> matchColour = rgb -> (red >= rgb.getMinR() && red <= rgb.getMaxR())
+				&& (green >= rgb.getMinG() && green <= rgb.getMaxG())
+				&& (blue >= rgb.getMinB() && blue <= rgb.getMaxB());
 		boolean match = rgbValues.stream().anyMatch(matchColour);
 		if (match) {
 			Logger.getLogger(Pixel.class.getName()).log(Level.INFO,
