@@ -28,15 +28,42 @@ public class PlayerPositionByNaiveBayes {
 
 		String featureVectorHeader = """
 				@relation players\n
-				@attribute height  {}
+				@attribute height  real
 				@attribute kit_number  real
-				@attribute attacking  {}
-				@attribute skill  {}
-				@attribute movement  {}
-				@attribute power  {}
-				@attribute mentality  {}
-				@attribute defending  {}
-				@attribute goalkeeping  {}
+				@attribute crossing  real
+				@attribute finishing  real
+				@attribute heading_accuracy  real
+				@attribute short_passing  real
+				@attribute volleys  real
+				@attribute dribbling  real
+				@attribute curve  real
+				@attribute fk_accuracy  real
+				@attribute long_passing  real
+				@attribute ball_control  real
+				@attribute acceleration  real
+				@attribute sprint_speed  real
+				@attribute agility  real
+				@attribute reactions  real
+				@attribute balance  real
+				@attribute shot_power  real
+				@attribute jumping  real
+				@attribute stamina  real
+				@attribute strength  real
+				@attribute long_shots  real
+				@attribute aggression  real
+				@attribute interceptions  real
+				@attribute positioning  real
+				@attribute vision  real
+				@attribute penalties  real
+				@attribute composure  real
+				@attribute defensive_awareness  real
+				@attribute standing_tackle  real
+				@attribute sliding_tackle  real
+				@attribute gk_diving  real
+				@attribute gk_handling  real
+				@attribute gk_kicking  real
+				@attribute gk_positioning  real
+				@attribute gk_reflexes  real
 				@attribute position  {}\n
 				@data\n""";
 
@@ -147,51 +174,63 @@ public class PlayerPositionByNaiveBayes {
 						new Mentality(33, 8, 12, 65, 15, 65), new Defending(18, 13, 15),
 						new Goalkeeping(79, 76, 74, 79, 80), "GK"));
 
-		Function<? super Player, ? extends PlayerFeatures> mapperPlayerToFeature = player -> {
-			double attacking = (player.attacking().crossing() + player.attacking().finishing()
-					+ player.attacking().headingAccuracy() + player.attacking().shortPassing()
-					+ player.attacking().volleys()) / 5;
-			double skill = (player.skill().dribbling() + player.skill().curve() + player.skill().fkAccuracy()
-					+ player.skill().longPassing() + player.skill().ballControl()) / 5;
-			double movement = (player.movement().acceleration() + player.movement().sprintSpeed()
-					+ player.movement().agility() + player.movement().reactions() + player.movement().balance()) / 5;
-			double power = (player.power().shotPower() + player.power().jumping() + player.power().stamina()
-					+ player.power().strength() + player.power().longShots()) / 5;
-			double mentality = (player.mentality().aggression() + player.mentality().interceptions()
-					+ player.mentality().positioning() + player.mentality().vision() + player.mentality().penalties()
-					+ player.mentality().composure()) / 6;
-			double defending = (player.defending().defensiveAwareness() + player.defending().standingTackle()
-					+ player.defending().slidingTackle()) / 3;
-			double goalkeeping = (player.goalkeeping().gkDiving() + player.goalkeeping().gkHandling()
-					+ player.goalkeeping().gkKicking() + player.goalkeeping().gkPositioning()
-					+ player.goalkeeping().gkReflexes()) / 5;
-			return new PlayerFeatures(player.name(), getRange(player.height()), player.kitNumber(), getRange(attacking),
-					getRange(skill), getRange(movement), getRange(power), getRange(mentality), getRange(defending),
-					getRange(goalkeeping), player.position());
-		};
-		List<PlayerFeatures> playerFeatures = samplePlayers.stream().map(mapperPlayerToFeature)
-				.collect(Collectors.toList());
 
 		formatter.format("%15s %15s %15s %15s %15s %15s %15s %15s %15s %15s\n", "HEIGHT", "KIT_NUMBER", "ATTACKING",
 				"SKILL", "MOVEMENT", "POWER", "MENTALITY", "DEFENDING", "GOALKEEPING", "POSITION");
 
-		playerFeatures.forEach(feature -> {
+		samplePlayers.forEach(feature -> {
 
-			fillDistinctValuesForHeader("height", feature.height(), possibleValuesForAttributes);
-			fillDistinctValuesForHeader("attacking", feature.attacking(), possibleValuesForAttributes);
-			fillDistinctValuesForHeader("skill", feature.skill(), possibleValuesForAttributes);
-			fillDistinctValuesForHeader("movement", feature.movement(), possibleValuesForAttributes);
-			fillDistinctValuesForHeader("power", feature.power(), possibleValuesForAttributes);
-			fillDistinctValuesForHeader("mentality", feature.mentality(), possibleValuesForAttributes);
-			fillDistinctValuesForHeader("defending", feature.defending(), possibleValuesForAttributes);
-			fillDistinctValuesForHeader("goalkeeping", feature.goalkeeping(), possibleValuesForAttributes);
 			fillDistinctValuesForHeader("position", feature.position(), possibleValuesForAttributes);
 
-			featureVectorFileData.append(feature.height() + "," + feature.kitNumber() + "," + feature.attacking() + ","
-					+ feature.skill() + "," + feature.movement() + "," + feature.power() + "," + feature.mentality()
-					+ "," + feature.defending() + "," + feature.goalkeeping() + "," + feature.position() + "\n");
+			featureVectorFileData.append(feature.height() + ",");
+			featureVectorFileData.append(feature.kitNumber() + ",");
+			
+			featureVectorFileData.append(feature.attacking().crossing() + ",");
+			featureVectorFileData.append(feature.attacking().finishing() + ",");
+			featureVectorFileData.append(feature.attacking().headingAccuracy() + ",");
+			featureVectorFileData.append(feature.attacking().shortPassing() + ",");
+			featureVectorFileData.append(feature.attacking().volleys() + ",");
+			
+			featureVectorFileData.append(feature.skill().dribbling() + ",");
+			featureVectorFileData.append(feature.skill().curve() + ",");
+			featureVectorFileData.append(feature.skill().fkAccuracy() + ",");
+			featureVectorFileData.append(feature.skill().longPassing() + ",");
+			featureVectorFileData.append(feature.skill().ballControl() + ",");
+			
+			featureVectorFileData.append(feature.movement().acceleration() + ",");
+			featureVectorFileData.append(feature.movement().sprintSpeed() + ",");
+			featureVectorFileData.append(feature.movement().agility() + ",");
+			featureVectorFileData.append(feature.movement().reactions() + ",");
+			featureVectorFileData.append(feature.movement().balance() + ",");
+			
+			featureVectorFileData.append(feature.power().shotPower() + ",");
+			featureVectorFileData.append(feature.power().jumping() + ",");
+			featureVectorFileData.append(feature.power().stamina() + ",");
+			featureVectorFileData.append(feature.power().strength() + ",");
+			featureVectorFileData.append(feature.power().longShots() + ",");
+			
+			featureVectorFileData.append(feature.mentality().aggression() + ",");
+			featureVectorFileData.append(feature.mentality().interceptions() + ",");
+			featureVectorFileData.append(feature.mentality().positioning() + ",");
+			featureVectorFileData.append(feature.mentality().vision() + ",");
+			featureVectorFileData.append(feature.mentality().penalties() + ",");
+			featureVectorFileData.append(feature.mentality().composure() + ",");
+			
+			featureVectorFileData.append(feature.defending().defensiveAwareness() + ",");
+			featureVectorFileData.append(feature.defending().standingTackle() + ",");
+			featureVectorFileData.append(feature.defending().slidingTackle() + ",");
+			
+			featureVectorFileData.append(feature.goalkeeping().gkDiving() + ",");
+			featureVectorFileData.append(feature.goalkeeping().gkHandling() + ",");
+			featureVectorFileData.append(feature.goalkeeping().gkKicking() + ",");
+			featureVectorFileData.append(feature.goalkeeping().gkPositioning() + ",");
+			featureVectorFileData.append(feature.goalkeeping().gkReflexes() + ",");
+			
+			featureVectorFileData.append(feature.position());
+			
+			featureVectorFileData.append("\n");
 
-			formatter.format("%14.7s %14.6s %14.6s %14.6s %14.6s %14.6s %14.6s %14.6s %17s\n", feature.height(),
+			formatter.format("%14.7s %14.6s %14.6s %14.6s %14.6s %14.6s %14.6s %14.6s %14.6s %17s\n", feature.height(),
 					feature.kitNumber(), feature.attacking(), feature.skill(), feature.movement(), feature.power(),
 					feature.mentality(), feature.defending(), feature.goalkeeping(), feature.position());
 		});
@@ -228,27 +267,62 @@ public class PlayerPositionByNaiveBayes {
 		Formatter resultTable = new Formatter();
 		resultTable.format("%14.15s %14.6s %14.6s %14.6s %17s\n", "PLAYER", "GK %", "CB %", "CAM %", "ST %");
 
-		playersToClassify.stream().map(mapperPlayerToFeature).forEach(player -> {
+		playersToClassify.forEach(player -> {
 
 			try {
 				Instance instanceToClassify = new DenseInstance(instances.numAttributes());
 				instanceToClassify.setDataset(instances);
+				
 				instanceToClassify.setValue(0, player.height());
 				instanceToClassify.setValue(1, player.kitNumber());
-				instanceToClassify.setValue(2, player.attacking());
-				instanceToClassify.setValue(3, player.skill());
-				instanceToClassify.setValue(4, player.movement());
-				instanceToClassify.setValue(5, player.power());
-				instanceToClassify.setValue(6, player.mentality());
-				instanceToClassify.setValue(7, player.defending());
-				instanceToClassify.setValue(8, player.goalkeeping());
+				
+				instanceToClassify.setValue(2, player.attacking().crossing());
+				instanceToClassify.setValue(3, player.attacking().finishing());
+				instanceToClassify.setValue(4, player.attacking().headingAccuracy());
+				instanceToClassify.setValue(5, player.attacking().shortPassing());
+				instanceToClassify.setValue(6, player.attacking().volleys());
+				
+				instanceToClassify.setValue(7, player.skill().dribbling());
+				instanceToClassify.setValue(8, player.skill().curve());
+				instanceToClassify.setValue(9, player.skill().fkAccuracy());
+				instanceToClassify.setValue(10, player.skill().longPassing());
+				instanceToClassify.setValue(11, player.skill().ballControl());
+				
+				instanceToClassify.setValue(12, player.movement().acceleration());
+				instanceToClassify.setValue(13, player.movement().sprintSpeed());
+				instanceToClassify.setValue(14, player.movement().agility());
+				instanceToClassify.setValue(15, player.movement().reactions());
+				instanceToClassify.setValue(16, player.movement().balance());
+				
+				instanceToClassify.setValue(17, player.power().shotPower());
+				instanceToClassify.setValue(18, player.power().jumping());
+				instanceToClassify.setValue(19, player.power().stamina());
+				instanceToClassify.setValue(20, player.power().strength());
+				instanceToClassify.setValue(21, player.power().longShots());
+				
+				instanceToClassify.setValue(22, player.mentality().aggression());
+				instanceToClassify.setValue(23, player.mentality().interceptions());
+				instanceToClassify.setValue(24, player.mentality().positioning());
+				instanceToClassify.setValue(25, player.mentality().vision());
+				instanceToClassify.setValue(26, player.mentality().penalties());
+				instanceToClassify.setValue(27, player.mentality().composure());
+				
+				instanceToClassify.setValue(28, player.defending().defensiveAwareness());
+				instanceToClassify.setValue(29, player.defending().standingTackle());
+				instanceToClassify.setValue(30, player.defending().slidingTackle());
+				
+				instanceToClassify.setValue(31, player.goalkeeping().gkDiving());
+				instanceToClassify.setValue(32, player.goalkeeping().gkHandling());
+				instanceToClassify.setValue(33, player.goalkeeping().gkKicking());
+				instanceToClassify.setValue(34, player.goalkeeping().gkPositioning());
+				instanceToClassify.setValue(35, player.goalkeeping().gkReflexes());
 
 				double[] result = naiveBayes.distributionForInstance(instanceToClassify);
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 				resultTable.format("%14.15s %14.6s %14.6s %14.6s %17s\n", player.name(),
-						decimalFormat.format(result[0]), decimalFormat.format(result[1]),
-						decimalFormat.format(result[2]), decimalFormat.format(result[3]));
+						decimalFormat.format(result[1]), decimalFormat.format(result[3]),
+						decimalFormat.format(result[2]), decimalFormat.format(result[0]));
 
 			} catch (Exception e) {
 				e.printStackTrace();
